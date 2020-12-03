@@ -1,23 +1,26 @@
 <template>
 	<view class="content">
 		<view class="langs">
-			<text :class="classlang_ch" @tap="changeLang('ch')">中文</text>
-			<text :class="classlang_en" @tap="changeLang('en')">English</text>
-			<text :class="classlang_fr" @tap="changeLang('fr')">Français</text>
+			<view class="lang" :class="{activelang: curlang==='ch'}" @tap="changeLang('ch')">中文</view>
+			<view class="lang" :class="{activelang: curlang==='en'}" @tap="changeLang('en')">English</view>
+			<view class="lang" :class="{activelang: curlang==='fr'}" @tap="changeLang('fr')">Français</view>
 		</view>
 		<view class="btns">
-			<button :class="classmulti" @tap="chooseType('multi')">5 x 8</button>
-			<button :class="classposneg" @tap="chooseType('posneg')">21 - (-3)</button>
+			<button :class="['btn', calcumulti?'checked':'unchecked']" @tap="chooseType('multi')">a x b</button>
+			<button :class="['btn', calcumulti?'unchecked':'checked']" @tap="chooseType('posneg')">a - (-b)</button>
+		</view>
+		<view class="times">
+			<text class="showtime" @tap="stopTimer">{{showtime}}</text>
 		</view>
 		<view class="messages">
-			<image class="logo" @tap="getNewExpression" :src='imagesrc'></image>
+			<image class="logo" @tap="startQues" :src='imagesrc'></image>
 			<text class="message">{{hintmessage}}</text>
 		</view>
 		<view class="text-area">
 			<text class="expression">{{expression}}</text>
 		</view>
 		<view class="input">
-			<input v-model="answer" :placeholder="inputtooltip" @keyup="handleKeyUp"/>
+			<input v-model="answer" :placeholder="inputtooltip"/>
 		</view>
 	</view>
 </template>
@@ -26,34 +29,45 @@
 	export default {
 		data() {
 			return {
-				title: 'hello',
+				title: 'Hello',
 				imagesrc: '/static/logo.png',
 				expression: '',
 				result: 0,
 				answer: '',
 				calcumulti: false,
-				classmulti: 'btn unchecked',
-				classposneg: 'btn checked',
 				curlang: 'ch',
-				classlang_ch: {
-					'lang': true,
-					'activelang':  true
+				res: {
+					"ch" : {
+					hintmessage: 'Tap to start Chinese',
+					inputtooltip: 'input the answer Chinese',
+					},
+					"en" : {
+					hintmessage: 'Tap to start English',
+					inputtooltip: 'input the answer English',
+					},
+					"fr" : {
+					hintmessage: 'Tap to start French',
+					inputtooltip: 'input the answer French',
+					},
 				},
-				classlang_en: {
-					'lang': true,
-					'activelang':  false
-				},
-				classlang_fr: {
-					'lang': true,
-					'activelang':  false
-				},
-				hintmessage: 'Tap to start',
-				inputtooltip: '',
+				timesecond: 0,
+				time: null,
 				minmulti:0,
 				maxmulti:9,
 				minposneg:-20,
-				maxposneg:20
+				maxposneg:20,
 			};
+		},
+		computed:{
+			hintmessage(){
+				return this.res[this.curlang].hintmessage
+			},
+			inputtooltip(){
+				return this.res[this.curlang].inputtooltip
+			},
+			showtime(){
+				return ('0' + Math.floor(this.timesecond / 60)).slice(-2) + ' : ' + ('0' + this.timesecond % 60).slice(-2)
+			},
 		},
 		onLoad() {
 		},
@@ -99,55 +113,32 @@
 					this.getPosNeg();
 				}
 				this.answer = '';
-				this.inputtooltip = 'input the answer';
+			},
+			
+			startQues(){
+				this.stopTimer()
+				this.timesecond = 0
+				this.getNewExpression()
+				this.startTimer()
 			},
 			
 			chooseType(type){
-				let checked = 'btn checked'
-				let unchecked = 'btn unchecked'
-				
-				if('multi' === type)
-				{
-					this.classmulti = checked
-					this.classposneg = unchecked
-					this.calcumulti = true
-				}
-				else
-				{
-					this.classmulti = unchecked
-					this.classposneg = checked
-					this.calcumulti = false
-				}
-				
+				this.calcumulti = ('multi' === type)
 				this.initcontent();
 			},
 			
-			handleKeyUp(){
-				console.log('hello')
-				console.log(this.answer, typeof this.answer)
-			},
 			changeLang(lang){
-				//console.log(lang)
 				this.curlang = lang
-				this.classlang_ch.activelang = false
-				this.classlang_en.activelang = false
-				this.classlang_fr.activelang = false
-				switch(lang){
-					case 'ch':
-					this.classlang_ch.activelang = true
-					break
-					
-					case 'en':
-					this.classlang_en.activelang = true
-					break
-					
-					case 'fr':
-					this.classlang_fr.activelang = true
-					break
-					
-				}
-			}
-		}
+			},
+			
+			startTimer(){
+				this.timer = setInterval(()=>{this.timesecond++}, 1000)
+			},
+			
+			stopTimer(){
+				console.log(this.timer)
+			},
+		},
 	}
 </script>
 
@@ -216,8 +207,11 @@
 	
 	.lang{
 		position: relative;
-		width: 150upx;
+		display: inline-block;
+		text-align: center;
+		width: 180upx;
 		margin: 50upx;
+		padding-bottom: 10upx;
 	}
 	
 	.activelang{
