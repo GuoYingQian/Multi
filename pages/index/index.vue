@@ -26,7 +26,7 @@
 	export default {
 		data() {
 			return {
-				title: 'Hello',
+				title: 'hello',
 				imagesrc: '/static/logo.png',
 				expression: '',
 				result: 0,
