@@ -15,7 +15,6 @@
 		</view>
 		<view class="messages">
 			<image class="logo" @tap="startQues" :src='imagesrc'></image>
-			<text class="message">{{hintmessage}}</text>
 		</view>
 		<view class="text-area">
 			<text class="expression">{{expression}}</text>
@@ -125,6 +124,7 @@
 				this.answer = ''
 				this.itemdone = 0
 				this.keyvisible = false
+				this.isdoing = false
 			},
 			
 			beginDo(){
@@ -252,7 +252,7 @@
 	.logo {
 		height: 200rpx;
 		width: 200rpx;
-		margin-top: 200rpx;
+		margin-top: 50rpx;
 		margin-left: auto;
 		margin-right: auto;
 		margin-bottom: 50rpx;
@@ -308,8 +308,8 @@
 		position: relative;
 		display: inline-block;
 		text-align: center;
-		width: 180upx;
-		margin: 50upx;
+		width: 150upx;
+		margin: 20upx;
 		padding-bottom: 10upx;
 	}
 	
