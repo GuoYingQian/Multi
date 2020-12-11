@@ -108,22 +108,22 @@
 				curlang: 'ch',
 				res: {
 					"ch" : {
-					hintmessage: 'Tap to start Chinese',
-					inputtooltip: 'input the answer Chinese',
+					hintmessage: '点击开始',
+					inputtooltip: '输入答案',
 					resultmessage: 'Good, you have finished the exersize',
-					entertext: 'Chinese Enter',
+					entertext: '确认',
 					},
 					"en" : {
-					hintmessage: 'Tap to start English',
-					inputtooltip: 'input the answer English',
+					hintmessage: 'Tap to start',
+					inputtooltip: 'input the answer',
 					resultmessage: 'Good, you have finished the exersize',
-					entertext: 'English Enter',
+					entertext: 'Enter',
 					},
 					"fr" : {
 					hintmessage: 'Tap to start French',
 					inputtooltip: 'input the answer French',
 					resultmessage: 'Good, you have finished the exersize',
-					entertext: 'French Enter',
+					entertext: 'Entrer',
 					},
 				},
 			};
