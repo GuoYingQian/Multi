@@ -284,14 +284,14 @@
 
 <style>
 	.uni-row{
-		margin-top: 20rpx;
+		margin-top: 15rpx;
 	}
 	
 	
 	.lang{
 		padding-bottom: 5rpx; 
 		text-align: center;
-		font-size: large;
+		font-size: medium;
 	}
 	
 	.activelang{
@@ -299,7 +299,7 @@
 	}
 	
 	.text{
-		font-size:x-large;
+		font-size:large;
 	}
 	
 	.btn{
@@ -328,14 +328,6 @@
 		flex: 1;
 	}
 	
-	.imagekey{
-		background-position:center;
-		background-size: cover;
-	}
-	#keyenter image{
-		height: 100%;
-	}
-	/* #keydelete{
-		background: url('./static/deletekey.png');
-	} */
+	
+	
 </style>
