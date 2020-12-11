@@ -31,7 +31,7 @@
 				<button class="keyitem" @tap="keyIn('7')">7</button>
 				<button class="keyitem" @tap="keyIn('8')">8</button>
 				<button class="keyitem" @tap="keyIn('9')">9</button>
-				<button id="keydelete" class="keyitem imagekey" @tap="keyIn('D')">←</button>
+				<button class="keyitem imagekey" @tap="keyIn('D')">←</button>
 			</view>
 			<view class="uni-flex uni-row">
 				<button class="keyitem" @tap="keyIn('4')">4</button>
@@ -47,7 +47,7 @@
 			</view>
 			
 			<view class="uni-flex uni-row">
-				<button id="keyenter" class="keyitem imagekey" @tap="keyIn('E')">{{entertext}}</button>
+				<button class="keyitem imagekey" @tap="keyIn('E')">{{entertext}}</button>
 			</view>
 
 			<!-- <view class="keymain uni-flex uni-column">
@@ -328,13 +328,6 @@
 		flex: 1;
 	}
 	
-	#keydelete{
-		background: url(../../static/deletekey.png);
-	}
-	
-	#keyenter{
-		background: url(../../static/deletekey.png);
-	}
 	.imagekey{
 		background-position:center;
 		background-size: cover;
