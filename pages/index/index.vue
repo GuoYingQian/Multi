@@ -14,9 +14,12 @@
 			<text class="showtime text" @tap="stopTimer">{{showtime}}</text>
 			<text class="currentitem text" v-show="isdoing">{{currentitem}}</text>
 		</view>
-		<view class="uni-flex uni-row" style="-webkit-justify-content: center;justify-content: center;">
+		<view class="uni-flex uni-row" style="-webkit-justify-content: center;justify-content:baseline;">
 			<image class="logo" @tap="startQues" :src='imagesrc'></image>
 		</view>
+		<!-- <view>
+			<image class="logo" @tap="startQues" :src='imagesrc'></image>
+		</view> -->
 		<view class="uni-flex uni-row" style="-webkit-justify-content: center;justify-content: center;">
 			<text class="text">{{expression}}</text>
 		</view>
@@ -24,7 +27,7 @@
 			<input class="text" style="-webkit-justify-content: center;justify-content: center;" v-model="answer" :placeholder="inputtooltip" @focus="needInput(true)" />
 		</view>
 		<view class="uni-flex uni-row" v-show="showresultmsg">
-			<view>{{resultmessage}}</view>
+			<view class="text">{{resultmessage}}</view>
 		</view>
 		<view v-show="isdoing">
 			<view class="uni-flex uni-row">
@@ -332,6 +335,8 @@
 		flex: 1;
 	}
 	
-	
+	.logo{
+		height: 230rpx;
+	}
 	
 </style>
