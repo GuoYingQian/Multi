@@ -86,7 +86,7 @@
 		data() {
 			return {
 				title: 'hello',
-				imagesrc: '/static/logo.png',
+				imagesrc: '/static/welcome.png',
 				expression: '',
 				result: 0,
 				answer: '',
@@ -164,16 +164,19 @@
 				
 				this.stopTimer()
 				this.timesecond = 0
+				this.imagesrc = '/static/welcome.png'
 			},
 			
 			beginDo(){
 				this.showresultmsg = false
 				this.isdoing = true
+				this.imagesrc = '/static/thinking.png'
 			},
 			
 			endDo(){
 				this.isdoing = false
 				this.showresultmsg = true
+				this.imagesrc = '/static/welcome.png'
 			},
 			
 			getrandom(min, max){
@@ -248,20 +251,21 @@
 						if(this.answer == this.result){
 							this.itemdone++
 							this.imagesrc = '/static/correctanswer.png'
-							setTimeout(()=>{this.imagesrc = '/static/logo.png'},1000)
+							setTimeout(()=>{
+								this.imagesrc = (this.isdoing ? '/static/thinking.png' : '/static/welcome.png')},1000)
 							if(this.itemdone < this.itemsize){
 								this.getNewExpression()
 							}
 							else{
 								this.stopTimer()
-								this.initcontent()
 								this.endDo()
+								this.initcontent()
 							}	
 						}
 						else{
 							this.answer=''
 							this.imagesrc = '/static/wronganswer.png'
-							setTimeout(()=>{this.imagesrc = '/static/logo.png'},1000)
+							setTimeout(()=>{this.imagesrc = '/static/thinking.png'},1000)
 						}
 						this.$refs.answer.$el.focus()
 						break
