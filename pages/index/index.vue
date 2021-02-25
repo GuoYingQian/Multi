@@ -1,6 +1,6 @@
 <template>
 	
-	<view class="uni-padding-wrap uni-common-mt">
+	<view class="uni-padding-wrap uni-common-mt background">
 		<view class="uni-flex uni-row">
 			<view class="lang" :class="{activelang: curlang==='ch'}" style="-webkit-flex: 1;flex: 1;" @tap="changeLang('ch')">中文</view>
 			<view class="lang" :class="{activelang: curlang==='en'}" style="-webkit-flex: 1;flex: 1;" @tap="changeLang('en')">English</view>
@@ -49,7 +49,7 @@
 				<button class="keyitem" @tap="keyIn('-')">-</button>
 			</view>
 			
-			<view class="uni-flex uni-row">
+			<view class="uni-flex uni-row lastrow">
 				<button class="keyitem imagekey" @tap="keyIn('E')">{{entertext}}</button>
 			</view>
 
@@ -89,7 +89,7 @@
 		data() {
 			return {
 				title: 'hello',
-				imagesrc: '/static/welcome.png',
+				imagesrc: '/static/welcome_chinese.png',
 				expression: '',
 				result: 0,
 				answer: '',
@@ -105,7 +105,7 @@
 				minposneg:-20,
 				maxposneg:20,
 				
-				itemsize:5,
+				itemsize:20,
 				itemdone:0,
 				
 				curlang: 'ch',
@@ -113,20 +113,23 @@
 					"ch" : {
 					hintmessage: '点击开始',
 					inputtooltip: '输入答案',
-					resultmessage: 'Good, you have finished the exersize',
+					resultmessage: '太棒了，你已经完成了本次练习 :)',
 					entertext: '确认',
+					welcomeimage: '/static/welcome_chinese.png'
 					},
 					"en" : {
 					hintmessage: 'Tap to start',
-					inputtooltip: 'input the answer',
-					resultmessage: 'Good, you have finished the exersize',
+					inputtooltip: 'Input the answer',
+					resultmessage: 'Congratulation, you have finished the exersize :)',
 					entertext: 'Enter',
+					welcomeimage: '/static/welcome_english.png'
 					},
 					"fr" : {
-					hintmessage: 'Tap to start French',
-					inputtooltip: 'input the answer French',
-					resultmessage: 'Good, you have finished the exersize',
+					hintmessage: 'Appuyez pour commencer',
+					inputtooltip: 'Écrivez la réponse',
+					resultmessage: 'Félicitation, tu as fini l\'exercice :)',
 					entertext: 'Entrer',
+					welcomeimage: '/static/welcome_french.png',
 					},
 				},
 			};
@@ -145,12 +148,16 @@
 			entertext(){
 				return this.res[this.curlang].entertext
 			},
+			welcomeimage(){
+				return this.res[this.curlang].welcomeimage
+			},
 			showtime(){
 				return ('0' + Math.floor(this.timesecond / 60)).slice(-2) + ' : ' + ('0' + this.timesecond % 60).slice(-2)
 			},
 			currentitem(){
 				return (this.itemdone+1) + ' / ' + this.itemsize 
-			}
+			},
+			
 		},
 		
 		onLoad() {
@@ -167,7 +174,7 @@
 				
 				this.stopTimer()
 				this.timesecond = 0
-				this.imagesrc = '/static/welcome.png'
+				this.imagesrc = this.welcomeimage
 			},
 			
 			beginDo(){
@@ -179,7 +186,7 @@
 			endDo(){
 				this.isdoing = false
 				this.showresultmsg = true
-				this.imagesrc = '/static/welcome.png'
+				//this.imagesrc = this.welcome_image
 			},
 			
 			getrandom(min, max){
@@ -235,6 +242,7 @@
 			
 			changeLang(lang){
 				this.curlang = lang
+				this.initcontent()
 			},
 			
 			needInput(need){
@@ -255,7 +263,7 @@
 							this.itemdone++
 							this.imagesrc = '/static/correctanswer.png'
 							setTimeout(()=>{
-								this.imagesrc = (this.isdoing ? '/static/thinking.png' : '/static/welcome.png')},1000)
+								this.imagesrc = (this.isdoing ? '/static/thinking.png' : this.welcomeimage)},1000)
 							if(this.itemdone < this.itemsize){
 								this.getNewExpression()
 							}
@@ -290,8 +298,12 @@
 </script>
 
 <style>
+	.background{
+		background-color: #86BED6;
+	}
 	.uni-row{
 		margin-top: 15rpx;
+		background-color: #86BED6;
 	}
 	
 	
@@ -299,13 +311,16 @@
 		padding-bottom: 5rpx; 
 		text-align: center;
 		font-size: medium;
+		color: #484848;
 	}
 	
 	.activelang{
 		border-bottom: solid;
+		color: #FAFAFA;
 	}
 	
 	.text{
+		color: #484848;
 		font-size:large;
 	}
 	
@@ -318,11 +333,14 @@
 	}
 	
 	.checked {
-		background-color:#808080;
+		color: #FAFAFA;
+		background-color:#4193B5;
 	}
 	
 	.unchecked {
-		border: 3upx solid #808080;
+		color: #484848;
+		border: 4rpx solid #484848;
+		background-color: #86BED6;
 	}
 
 	.input {
@@ -333,10 +351,14 @@
 	.keyitem{
 		-webkit-flex: 1;
 		flex: 1;
+		background-color: #4193B5;
+		color: #FAFAFA;
 	}
 	
 	.logo{
-		height: 230rpx;
+		height: 225rpx;
 	}
+	
+	
 	
 </style>
